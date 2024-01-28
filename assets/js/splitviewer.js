@@ -31,7 +31,6 @@ function importsplits(userinput) {
 		searchposition[0] = userinput.indexOf("</SplitTime>", searchposition[0]);
 		currentcomparison++
 	}
-	console.log(comparisons);
 	searchposition = [0, 0];
 	while (userinput.indexOf("<Segment>", searchposition[0]) != -1) {
 		searchposition[0] = userinput.indexOf("<Segment>", searchposition[0]);
@@ -122,7 +121,6 @@ function importsplits(userinput) {
 		searchposition[0] = userinput.indexOf("</Segment>", searchposition[0]);
 		currentsplit++;
 	}
-	console.log(attempthistory);
 	//Import runs
 	runhistory = [];
 	searchposition = [0, 0];
@@ -155,10 +153,8 @@ function importsplits(userinput) {
 		runhistory[currentattempt][3] = userinput.substring(userinput.indexOf("started=\"", searchposition[0]) + 9, userinput.indexOf("\" isStartedSynced=", searchposition[0]));
 		runhistory[currentattempt][4] = userinput.substring(userinput.indexOf("ended=\"", searchposition[0]) + 7, userinput.indexOf("\" isEndedSynced=", searchposition[0]));
 		searchposition[0] = currentrunend;
-		console.log(userinput.substring(userinput.indexOf("<Attempt", searchposition[0]), userinput.indexOf("<Attempt", searchposition[0]) + 50) + " " + searchposition[0]);
 		currentattempt++;
 	}
-	console.log(runhistory);
 	document.getElementById("splitmetadata").innerHTML = "<p><strong>Platform: </strong>" + userinput.substring(userinput.indexOf(">", userinput.indexOf("<Platform")) + 1, userinput.indexOf("</Platform")) + "<br><strong>Uses Emulator: </strong>" + userinput.substring(userinput.indexOf("usesEmulator=\"") + 14, userinput.indexOf("\">", userinput.indexOf("usesEmulator=\""))) + "<br><strong>Region: </strong>" + userinput.substring(userinput.indexOf("<Region>") + 8, userinput.indexOf("</Region>")) + "<br><strong>Finished Run Count: </strong>" + runhistory[0] + "<br><strong>Total Attempt Count: </strong>" + attemptcount;
 	document.getElementById("splitsoverview").innerHTML = getoverview(1, 0);
 }
@@ -358,7 +354,6 @@ function loadiwtables() {
 					}
 					currentlevel++;
 				}
-				console.log(excludedhwtimes[currenthw]);
 				if ((currentcalc < currentbest || currentbest == 0) && !excludedhwtimes[currenthw].includes(currentattempt)) {
 					currentbest = currentcalc;
 					homeworldbestattempts[currenthw] = currentattempt;
@@ -477,7 +472,6 @@ function iwhwcomp(consecutive, iwselect, iwmethod) {
 			}
 			if (hwlist[currenthw] < currentlevel) {
 				currenthw++;
-				console.log(currenthw);
 			}
 			if (iwmethod == 0 || iwmethod == 3) {
 				comptimes[currentlevel] = attempthistory[currentlevel][iwcomp[0]][iwcomp[1]][1];
@@ -497,8 +491,6 @@ function iwhwcomp(consecutive, iwselect, iwmethod) {
 		} else if (iwmethod == 1) {
 			document.getElementById(consecutive + "hwcomp" + currentlevel).innerHTML = delta(besthwtimes[currentlevel], comptimes[currentlevel]);
 		} else if (iwmethod == 2) {
-			console.log(attempthistory[currentlevel][2][homeworldbestattempts[currenthw]][2]);
-			console.log(comptimes[currentlevel]);
 			document.getElementById(consecutive + "hwcomp" + currentlevel).innerHTML = delta(iwtotalsplittimes[currentlevel], comptimes[currentlevel]);
 		}
 		currentlevel++;
