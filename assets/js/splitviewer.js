@@ -132,9 +132,9 @@ function importsplits(userinput) {
 	runhistory[0] = 0 //Finished run count as the first value of this array
 	while (userinput.indexOf("<Attempt", searchposition[0]) != -1) {
 		searchposition[0] = userinput.indexOf("<Attempt", searchposition[0]);
-		if (userinput.indexOf("</Attempt>", searchposition[0]) < userinput.indexOf("/>", searchposition[0])) {
+		if (userinput.indexOf("</Attempt>", searchposition[0]) < userinput.indexOf("/>", searchposition[0]) && userinput.indexOf("</Attempt>", searchposition[0]) != -1) {
 			currentrunend = userinput.indexOf("</Attempt>", searchposition[0]);
-		} else if (userinput.indexOf("/>", searchposition[0]) < userinput.indexOf("</Attempt>", searchposition[0])) {
+		} else {
 			currentrunend = userinput.indexOf("/>", searchposition[0]);
 		}
 		runhistory[currentattempt] = [];
@@ -155,6 +155,7 @@ function importsplits(userinput) {
 		runhistory[currentattempt][3] = userinput.substring(userinput.indexOf("started=\"", searchposition[0]) + 9, userinput.indexOf("\" isStartedSynced=", searchposition[0]));
 		runhistory[currentattempt][4] = userinput.substring(userinput.indexOf("ended=\"", searchposition[0]) + 7, userinput.indexOf("\" isEndedSynced=", searchposition[0]));
 		searchposition[0] = currentrunend;
+		console.log(userinput.substring(userinput.indexOf("<Attempt", searchposition[0]), userinput.indexOf("<Attempt", searchposition[0]) + 50) + " " + searchposition[0]);
 		currentattempt++;
 	}
 	console.log(runhistory);
